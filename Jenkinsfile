@@ -1,5 +1,9 @@
 pipeline {
   agent any
+   
+   tools {
+		maven "Maven"
+	}
         
   stages {
 	    stage('Scm Checkout') {
@@ -7,11 +11,17 @@ pipeline {
 			    	checkout scm
 		    }
 	    }
-  
-	    stage('print') {
+  	    stage('Build') {
 		    steps {
-			    	echo "hello"
+			    sh 'mvn clean'
 		    }
 	    }
+           stage('Test') {
+		    steps {
+			    echo "Testing..."
+			    sh 'mvn test'
+		    }
+	    }		
+	    
   }
 }
